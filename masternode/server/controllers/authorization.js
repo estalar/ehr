@@ -5,13 +5,26 @@ const Web3 = require('web3');
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 module.exports.register=(req,res)=>{
     var owner='hello'
-    const input = 'pragma solidity  ^0.4.11;contract patient{string owner="'+owner+'";mapping(string=>string)records;function AddRecord(string _time,string _hash) public{records[_time]=_hash; } function FetchRecord(string _time) public returns(string){return(records[_time]); }function GetOwner() returns(string){return owner;}}'
+    console.log(req.body.password+'\n\n');
+    var userAddress=web3.personal.newAccount(req.body.password)
+    console.log("new user address",userAddress)
+    const input = 'pragma solidity  ^0.4.11;contract patient{string owner="'+owner+'";mapping(string=>string)records;function AddRecord(string _time,string _hash) public{records[_time]=_hash; } function FetchRecord(string _time) public returns(string){return(records[_time]); }function GetOwner(string hello) returns(string,string){return (hello,owner);}}'
     var output = solc.compile(input, 1)
+    console.log(output)
     var data=output.contracts[':patient'].bytecode
     var abi=output.contracts[':patient'].interface
     var patientContract=web3.eth.contract(JSON.parse(abi))
-    console.log("helo:"+web3.eth.accounts[0])
-    web3.personal.unlockAccount(web3.eth.accounts[0], "kattanam", 10000);
+    console.log(abi)
+    web3.personal.unlockAccount(web3.eth.accounts[0],"kattanam",10000);
+    web3.eth.sendTransaction({
+        from:web3.eth.accounts[0],
+        to:userAddress,
+        value:100000000000000000000
+    },(err,success)=>{
+        console.log('error:'+err)
+        console.log('success:'+success)
+
+    })
     var patientInstance=patientContract.new({
         data:'0x'+data,
         from:web3.eth.accounts[0],
@@ -23,7 +36,7 @@ module.exports.register=(req,res)=>{
             if(patientInstance.address!==undefined){
                 console.log(patientInstance.address)
                 clearInterval(intId)
-                res.json({status:400,address:patientInstance.address}).end()   
+                res.json({status:400,address:userAddress,contract:patientInstance.address}).end()   
                 patientInstance.address=undefined         
             }
         },3000)

@@ -2,7 +2,6 @@ var express=require('express')
 var app=express()
 var http=require('http').Server(express)
 var bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 var authorizationController=require('./server/controllers/authorization')
