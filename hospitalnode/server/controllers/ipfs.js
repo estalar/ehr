@@ -10,3 +10,15 @@ module.exports.addData=function(req, res){
   }
  });
 }
+
+
+module.exports.getData=function(req, res){
+  ipfs.cat(req.body.hash, (err, result) => {
+  if(err){
+    res.json({status:400,details:err})
+  }
+  else{
+    res.json({status:200,medRec:result})
+  }
+ });
+}
