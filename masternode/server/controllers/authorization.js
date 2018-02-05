@@ -8,7 +8,7 @@ module.exports.register=(req,res)=>{
     console.log(req.body.password+'\n\n');
     var userAddress=web3.personal.newAccount(req.body.password)
     console.log("new user address",userAddress)
-    const input = 'pragma solidity  ^0.4.11;contract patient{string owner="'+owner+'";mapping(string=>string)records;function AddRecord(string _time,string _hash) public{records[_time]=_hash; } function FetchRecord(string _time) public returns(string){return(records[_time]); }function GetOwner(string hello) returns(string,string){return (hello,owner);}}'
+    const input = fs.readFileSync('../../smartcontracts/patient.sol');
     var output = solc.compile(input, 1)
     console.log(output)
     var data=output.contracts[':patient'].bytecode
@@ -36,10 +36,9 @@ module.exports.register=(req,res)=>{
             if(patientInstance.address!==undefined){
                 console.log(patientInstance.address)
                 clearInterval(intId)
-                res.json({status:400,address:userAddress,contract:patientInstance.address}).end()   
-                patientInstance.address=undefined         
+                res.json({status:400,address:userAddress,contract:patientInstance.address}).end()
+                patientInstance.address=undefined
             }
         },3000)
     })
 }
-    
