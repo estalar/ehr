@@ -2,10 +2,20 @@ pragma solidity  ^0.4.11;
 contract patient{
     address owner;
     uint accessCode;
-    mapping(string=>string)records;
+    string dob;
 
-    function patient(){
+    bytes32[10] hash;
+    bytes32[10] time;
+
+    uint public n;
+
+
+
+    function patient(string _dob){
      owner = msg.sender;
+     dob = _dob;
+     accessCode = 2255;
+     n=0;
     }
 
     modifier isOwner{
@@ -17,13 +27,20 @@ contract patient{
       accessCode = _accessCode;
     }
 
-    function AddRecord(string _time,string _hash,uint _accessCode) public {
+    function AddRecord(bytes32 _time,bytes32 _hash,uint _accessCode) public {
        require(accessCode==accessCode);
-       records[_time]=_hash;
+       time[n]=_time;
+       hash[n]=_hash;
+       n++;
     }
 
-    function FetchRecord(string _time,uint _accessCode) public constant returns(string){
+    function FetchRecord(uint _n,uint _accessCode) public constant returns(bytes32,bytes32){
         require(accessCode==accessCode);
-        return(records[_time]);
+        return (time[_n],hash[_n]);
+    }
+
+    function FetchDob(uint _accessCode) public constant returns(string){
+        require(accessCode==accessCode);
+        return dob;
     }
 }
