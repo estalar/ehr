@@ -1,6 +1,21 @@
 <div class="container">
-  <form #diagnosis="ngForm" (ngSubmit)="addDiagnosisData(diagnosis.value)">
-    <input type="text" class="formcontrol" (ngModel)="username" name="user" />
-    <input type="submit" value="submit" />
+    <h1>Diagnosis</h1>
+  <form #form="ngForm" (ngSubmit)="addDiagnosisData(form.value)" >
+    <div class="row">
+        <div class="col">
+            <input type="text" placeholder="wt" name="wt" class="form-control" ngModel/>
+            <input type="text" placeholder="ht" name="ht" class="form-control" ngModel/>
+            <input type="text" placeholder="BMI" name="BMI" class="form-control" ngModel/>
+          </div>
+          <div class="col">
+            <input type="text" placeholder="Ward/Bed n." name="bed" class="form-control" ngModel/>
+            <input type="text" placeholder="adm. date" name="adm" class="form-control" ngModel/>
+            <input type="text" placeholder="discharge date" name="dis" class="form-control" ngModel/>
+          </div> 
+         
+    </div>
+    <textarea name="complaint" ngModel class="md-textarea" placeholder="Chief Complaint"></textarea>
+    <textarea name="history" ngModel class="md-textarea" placeholder="History of present illness"></textarea>
+    <button type="submit" class="btn btn-default waves-light">Submit</button>
   </form>
 </div>
