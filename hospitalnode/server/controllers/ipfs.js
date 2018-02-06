@@ -6,7 +6,7 @@ module.exports.addData=function(req, res){
     res.json({status:400,details:err})
   }
   else{
-    res.json({status:200,hash:result})
+    res.json({status:200,details:result})
   }
  });
 }
@@ -18,7 +18,7 @@ module.exports.getData=function(req, res){
     res.json({status:400,details:err})
   }
   else{
-    res.json({status:200,medRec:result})
+    res.json({status:200,details:result})
   }
  });
 }
