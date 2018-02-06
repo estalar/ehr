@@ -10,9 +10,10 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-var ipfscontroller=require('./server/controllers/postIpfs')
+var ipfscontroller=require('./server/controllers/ipfs')
 
 app.post('/api/ipfs/add',ipfscontroller.addData)
+app.post('/api/ipfs/get',ipfscontroller.getData)
 app.listen(3010,()=>{
     console.log('server listening at 3010')
 })
