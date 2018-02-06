@@ -10,7 +10,7 @@ const bytecode = output.contracts[':Master'].bytecode;
 const abi = JSON.parse(output.contracts[':Master'].interface);
 console.log(output.contracts[':Master'].interface)
 const contract = web3.eth.contract(abi);
-//web3.personal.unlockAccount(web3.eth.accounts[0],"kattanam",100000)
+web3.personal.unlockAccount(web3.eth.accounts[0],"kattanam",100000)
 const contractInstance = contract.new({
     data: '0x' + bytecode,
     from: web3.eth.accounts[0],

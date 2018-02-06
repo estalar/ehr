@@ -8,7 +8,7 @@ module.exports.register=(req,res)=>{
     console.log(req.body.password+'\n\n');
     var userAddress=web3.personal.newAccount(req.body.password)
     console.log("new user address",userAddress)
-    const input = fs.readFileSync('../../smartcontracts/patient.sol');
+    const input = fs.readFileSync(__dirname+'/smartcontracts/patient.sol');
     var output = solc.compile(input, 1)
     console.log(output)
     var data=output.contracts[':patient'].bytecode
