@@ -4,11 +4,11 @@ contract patient{
     uint accessCode;
     string dob;
 
-    bytes32[10] hash;
-    bytes32[10] time;
+    bytes32[100] hash;
+    bytes32[100] time;
 
     uint public n;
-    
+
     function patient(){
      owner = msg.sender;
      accessCode = 2255;
@@ -22,6 +22,10 @@ contract patient{
 
     function changeAccessCode(uint _accessCode) isOwner{
       accessCode = _accessCode;
+    }
+
+    function changeDob(string _dob) isOwner{
+      dob=_dob;
     }
 
     function AddRecord(bytes32 _time,bytes32 _hash,uint _accessCode) public {
