@@ -4,6 +4,7 @@ var fs=require('fs')
 const Web3 = require('web3');
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 module.exports.register=(req,res)=>{
+    console.log('hello world')
     var owner='hello'
     console.log(req.body.password+'\n\n');
     var userAddress=web3.personal.newAccount(req.body.password)
