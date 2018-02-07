@@ -8,12 +8,9 @@ contract patient{
     bytes32[10] time;
 
     uint public n;
-
-
-
-    function patient(string _dob){
+    
+    function patient(){
      owner = msg.sender;
-     dob = _dob;
      accessCode = 2255;
      n=0;
     }

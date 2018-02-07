@@ -9,8 +9,8 @@ module.exports.register=(req,res)=>{
     console.log(req.body.password+'\n\n');
     var userAddress=web3.personal.newAccount(req.body.password)
     console.log("new user address",userAddress)
-    const input = fs.readFileSync(__dirname+'/smartcontracts/patient.sol');
-    var output = solc.compile(input, 1)
+    const input = fs.readFileSync(__dirname+'/patient.sol');
+    var output = solc.compile(input.toString(), 1)
     console.log(output)
     var data=output.contracts[':patient'].bytecode
     var abi=output.contracts[':patient'].interface
@@ -37,7 +37,12 @@ module.exports.register=(req,res)=>{
             if(patientInstance.address!==undefined){
                 console.log(patientInstance.address)
                 clearInterval(intId)
-                res.json({status:400,address:userAddress,contract:patientInstance.address}).end()
+                var masterContract=web3.eth.contract(JSON.parse('[{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"patients","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_patient","type":"address"}],"name":"returnRecord","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_patient","type":"address"},{"name":"_contract","type":"address"}],"name":"addRecord","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"function"}]'))
+                masterContractInstance=masterContract.at('0x69b825268941f4916f8cbe438a2a5666f5d7dfaf')
+                masterContractInstance.addRecord(userAddress.toString(),patientInstance.address.toString(),{from:web3.eth.accounts[0]},(err,response)=>{
+                    console.log(err,'+',response)
+                })
+                res.json({status:200,address:userAddress,contract:patientInstance.address}).end()
                 patientInstance.address=undefined
             }
         },3000)

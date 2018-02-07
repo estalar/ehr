@@ -1,6 +1,7 @@
 <div class="container">
     <h1>Diagnosis</h1>
   <form #form="ngForm" (ngSubmit)="addDiagnosisData(form.value)" >
+    {{ipfsHash.details}}
     <div class="row">
         <div class="col">
             <input type="text" placeholder="wt" name="wt" class="form-control" ngModel/>

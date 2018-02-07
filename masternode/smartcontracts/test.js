@@ -5,14 +5,8 @@ var contract=web3.eth.contract([{"constant":true,"inputs":[{"name":"_n","type":"
 web3.eth.defaultAccount=web3.eth.accounts[0];
 //web3.personal.unlockAccount(web3.eth.accounts[0],"kattanam",100000)
 var contractInstance=contract.at('0x8cdaf0cd259887258bc13a92c0a6da92698644c0');
-console.log(contractInstance.n());
-//console.log(contractInstance.hash(1));
-/*contractInstance.AddRecord("6/2/18","QmTfCejg",2255,function(err,result){
-    if(err){
-        console.log(err)
-    }
-    console.log('result : '+result)
-})*/
+console.log(contractInstance.hash(1));
+
 contractInstance.FetchRecord(0,2255,function(err,result){
     if(err){
         console.log(err)
